@@ -34,6 +34,22 @@
             <artifactId>netty-all</artifactId>
             <version>4.0.21.Final</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>
@@ -44,7 +60,7 @@
                     <configuration>
                         <archive>
                             <manifest>
-                                <mainClass>org.lvy.mqt.Main</mainClass>
+                                <mainClass>org.lvy.mqt.AppBootstrap</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>

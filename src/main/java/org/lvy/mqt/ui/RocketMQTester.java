@@ -1,7 +1,10 @@
 package org.lvy.mqt.ui;
 
-import org.lvy.mqt.action.ConfirmActionListener;
-import org.lvy.mqt.utils.ConfigUtils;
+import org.lvy.mqt.action.ConfirmSendAndRecvActionListener;
+import org.lvy.mqt.action.WindowsCloseHandler;
+import org.lvy.mqt.mq.MQReceiver;
+import org.lvy.mqt.mq.MQSender;
+import org.lvy.mqt.util.ConfigUtils;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +17,43 @@ import java.awt.event.WindowEvent;
  * Created by livvy on 15/8/6.
  */
 public class RocketMQTester extends JFrame {
+
+    public MQSender getMqSender() {
+        return mqSender;
+    }
+
+    public void setMqSender(MQSender mqSender) {
+        this.mqSender = mqSender;
+    }
+
+    public MQReceiver getMqReceiver() {
+        return mqReceiver;
+    }
+
+    public void setMqReceiver(MQReceiver mqReceiver) {
+        this.mqReceiver = mqReceiver;
+    }
+
+    public JTextArea getRecvMsgArea() {
+        return recvMsgArea;
+    }
+
+    public void setRecvMsgArea(JTextArea recvMsgArea) {
+        this.recvMsgArea = recvMsgArea;
+    }
+
+    public JScrollPane getRecvMsgPanelArea() {
+        return recvMsgPanelArea;
+    }
+
+    public void setRecvMsgPanelArea(JScrollPane recvMsgPanelArea) {
+        this.recvMsgPanelArea = recvMsgPanelArea;
+    }
+
+    private MQSender mqSender;
+
+    private MQReceiver mqReceiver;
+
 
     public RocketMQTester() throws HeadlessException {
         super();
@@ -32,12 +72,7 @@ public class RocketMQTester extends JFrame {
         initCallbackMsg();
         initRecvMsg();
         initRecvMsgDiplayer();
-        this.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                super.windowClosing(e);
-                System.exit(0);
-            }
-        });
+        this.addWindowListener(new WindowsCloseHandler(this));
     }
 
     private void initRecvMsgDiplayer() {
@@ -94,7 +129,7 @@ public class RocketMQTester extends JFrame {
         btnRecvPanel.setBounds(10, 10, 200, 200);
 
         btnConfirmAddr.setBounds(10, 10, 180, 20);
-        btnConfirmAddr.addActionListener(new ConfirmActionListener(this));
+        btnConfirmAddr.addActionListener(new ConfirmSendAndRecvActionListener(this));
         btnRecvPanel.add(btnConfirmAddr);
 
 //        btnModifyAddr.setBounds(10, 10, 180, 20);

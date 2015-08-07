@@ -1,4 +1,4 @@
-package org.lvy.mqt.utils;
+package org.lvy.mqt.util;
 
 import java.util.ResourceBundle;
 
@@ -10,12 +10,15 @@ public final class ConfigUtils {
         throw new AssertionError();
     }
 
+
     private static final ResourceBundle CONFIG = ResourceBundle.getBundle("config");
 
 
     public static String getConfig(String key) {
         return CONFIG.getString(key);
     }
+
+
     public static int getIntConfig(String key) {
         return Integer.parseInt(getConfig(key));
     }
