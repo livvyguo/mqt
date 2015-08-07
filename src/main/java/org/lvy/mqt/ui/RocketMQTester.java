@@ -16,14 +16,13 @@ public class RocketMQTester extends JFrame {
     public RocketMQTester() throws HeadlessException {
         super();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-
         this.setSize(width, height);
         setLocation((screenSize.width - width) / 2, (screenSize.height - height) / 2);
         this.getContentPane().setLayout(new FlowLayout());
         this.setTitle("RocketMQ Tester");
         initRocketMQSenderAddr();
         initRocketMQRecvAddr();
-        initBtnRecv();
+        initOperateBtn();
         initRocketMQSenderInfo();
         initCallbackMsg();
 
@@ -36,8 +35,19 @@ public class RocketMQTester extends JFrame {
         });
     }
 
-    private void initBtnRecv() {
+    private void initOperateBtn() {
+        JPanel btnRecvPanel = new JPanel();
+        btnRecvPanel.setLayout(new GridLayout(2, 1));
+        btnRecvPanel.setLocation(10, 10);
+        btnRecvPanel.setBounds(10, 10, 200, 200);
 
+        btnConfirmAddr.setBounds(10, 10, 180, 20);
+        btnRecvPanel.add(btnConfirmAddr);
+
+        btnBeginRecv.setBounds(10, 10, 180, 20);
+        btnRecvPanel.add(btnBeginRecv);
+
+        this.add(btnRecvPanel);
     }
 
     private void initCallbackMsg() {
@@ -185,5 +195,6 @@ public class RocketMQTester extends JFrame {
     private JScrollPane callbackPanel = new JScrollPane();
 
     private JButton btnBeginRecv = new JButton("开始接收消息");
+    private JButton btnConfirmAddr = new JButton("确认收发地址");
 
 }
