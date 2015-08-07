@@ -1,4 +1,4 @@
-package org.lvy.mqt;
+package org.lvy.mqt.mq;
 
 /**
  * Created by livvy on 15/8/6.

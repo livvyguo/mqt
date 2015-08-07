@@ -1,5 +1,7 @@
 package org.lvy.mqt;
 
+import org.lvy.mqt.ui.RocketMQTester;
+
 /**
  * Created by livvy on 15/8/6.
  */

@@ -1,4 +1,4 @@
-package org.lvy.mqt;
+package org.lvy.mqt.ui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ import java.awt.event.WindowEvent;
  */
 public class RocketMQTester extends JFrame {
     private int width = 840;
-    private int height = 500;
+    private int height = 700;
     public RocketMQTester() throws HeadlessException {
         super();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -22,6 +22,8 @@ public class RocketMQTester extends JFrame {
         this.getContentPane().setLayout(new FlowLayout());
         this.setTitle("RocketMQ Tester");
         initRocketMQSenderAddr();
+        initRocketMQRecvAddr();
+        initBtnRecv();
         initRocketMQSenderInfo();
         initCallbackMsg();
 
@@ -34,6 +36,10 @@ public class RocketMQTester extends JFrame {
         });
     }
 
+    private void initBtnRecv() {
+
+    }
+
     private void initCallbackMsg() {
 
         callbackPanel.setPreferredSize(new Dimension(800, 200));
@@ -41,7 +47,7 @@ public class RocketMQTester extends JFrame {
         callbackPanel.setBorder(BorderFactory.createTitledBorder("发送结果"));
         callbackPanel.setLayout(new ScrollPaneLayout());
         sendCallbackMsg.setColumns(68);
-        sendCallbackMsg.setRows(10);
+        sendCallbackMsg.setRows(7);
         sendCallbackMsg.setText("msg");
         sendCallbackMsg.setLineWrap(true);
         callbackPanel.setViewportView(sendCallbackMsg);
@@ -73,6 +79,35 @@ public class RocketMQTester extends JFrame {
         senderAddrPanel.add(txtMqSenderGroupName);
         this.add(senderAddrPanel);
     }
+
+
+    private void initRocketMQRecvAddr() {
+        JPanel recvAddrPanel = new JPanel();
+        recvAddrPanel.setLayout(new GridLayout(3,2));
+        recvAddrPanel.setBorder(BorderFactory.createTitledBorder("接收地址")); //设置面板边框，实现分组框的效果，此句代码为关键代码
+        recvAddrPanel.setLocation(10,10);
+
+        lblMqRecvNamesrvAddr.setBounds(20, 20, 130, 20);
+        recvAddrPanel.add(lblMqRecvNamesrvAddr);
+
+        txtMqRecvNamesrvAddr.setBounds(150, 20, 130, 20);
+        txtMqRecvNamesrvAddr.setText("192.168.36.190:9876");
+        recvAddrPanel.add(txtMqRecvNamesrvAddr);
+
+        lblMqRecvInstanceName.setBounds(20, 50, 130, 20);
+        recvAddrPanel.add(lblMqRecvInstanceName);
+        txtMqRecvInstanceName.setBounds(150, 50, 130, 20);
+        txtMqRecvInstanceName.setText("testRevcInst");
+        recvAddrPanel.add(txtMqRecvInstanceName);
+        lblMqRecvGroupName.setBounds(20, 80, 130, 20);
+        recvAddrPanel.add(lblMqRecvGroupName);
+        txtMqRecvGroupName.setBounds(150, 80, 130, 20);
+        txtMqRecvGroupName.setText("testRecvGroup");
+        recvAddrPanel.add(txtMqRecvGroupName);
+        this.add(recvAddrPanel);
+    }
+    
+    
 
     private void initRocketMQSenderInfo() {
         JPanel senderAddrPanel = new JPanel();
@@ -128,6 +163,14 @@ public class RocketMQTester extends JFrame {
     private JLabel lblMqSenderGroupName = new JLabel("GroupName:");
 
 
+    private JTextField txtMqRecvNamesrvAddr = new JTextField();
+    private JTextField txtMqRecvGroupName = new JTextField();
+    private JTextField txtMqRecvInstanceName = new JTextField();
+    private JLabel lblMqRecvNamesrvAddr = new JLabel("NamesrvAddr:");
+    private JLabel lblMqRecvInstanceName = new JLabel("InstanceName:");
+    private JLabel lblMqRecvGroupName = new JLabel("GroupName:");
+
+
 
     private JLabel lblMsgTopic = new JLabel("Topic:");
     private JTextField txtMsgTopic = new JTextField();
@@ -141,5 +184,6 @@ public class RocketMQTester extends JFrame {
     private JTextArea sendCallbackMsg = new JTextArea();
     private JScrollPane callbackPanel = new JScrollPane();
 
+    private JButton btnBeginRecv = new JButton("开始接收消息");
 
 }
