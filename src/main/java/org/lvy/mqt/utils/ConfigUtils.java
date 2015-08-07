@@ -16,4 +16,7 @@ public final class ConfigUtils {
     public static String getConfig(String key) {
         return CONFIG.getString(key);
     }
+    public static int getIntConfig(String key) {
+        return Integer.parseInt(getConfig(key));
+    }
 }
