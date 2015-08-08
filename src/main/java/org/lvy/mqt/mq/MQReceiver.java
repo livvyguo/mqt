@@ -15,24 +15,22 @@ import java.util.List;
  */
 public class MQReceiver {
 
+    public MQReceiver(String group, String namesrv, String instance, String topic, String tags, MessageListenerConcurrently messageListenerConcurrently) throws MQClientException {
+        init(group, namesrv, instance, topic, tags, messageListenerConcurrently);
+    }
 
     private DefaultMQPushConsumer consumer;
 
-    public void init(String group,String namesrv,String instance,String topic,String tags,MessageListenerConcurrently messageListenerConcurrently) throws MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(
+    private void init(String group,String namesrv,String instance,String topic,String tags,MessageListenerConcurrently messageListenerConcurrently) throws MQClientException {
+        consumer = new DefaultMQPushConsumer(
                 group);
         consumer.setNamesrvAddr(namesrv);
         consumer.setInstanceName(instance);
 
-        /**
-         * 订阅指定topic下tags分别等于TagA或TagC或TagD 可以多个
-         */
         consumer.subscribe(topic, tags);
 
         consumer.registerMessageListener(messageListenerConcurrently);
-        /**
-         * Consumer对象在使用之前必须要调用start初始化，初始化一次即可<br>
-         */
+
         consumer.start();
     }
 
