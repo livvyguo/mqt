@@ -39,7 +39,10 @@ public class ConfirmSendAndRecvActionListener implements ActionListener {
         } else {
             //以前启动  现在销毁
             swapDisplayStats(mqTester, "确认收发地址", false, true);
-            mqTester.getMqSender().shutdown();
+            MQSender mqSender = mqTester.getMqSender();
+            if (mqSender != null) {
+                mqSender.shutdown();
+            }
             mqTester.setMqSender(null);
         }
     }

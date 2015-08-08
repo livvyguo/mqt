@@ -14,70 +14,31 @@ import java.util.List;
  * 消息接收类
  */
 public class MQReceiver {
+
+
     private DefaultMQPushConsumer consumer;
 
-    public void init(String group) {
-
-    }
-
-    public void shutdown() {
-
-    }
-
-
-    public static void main(String[] args) throws MQClientException {
+    public void init(String group,String namesrv,String instance,String topic,String tags,MessageListenerConcurrently messageListenerConcurrently) throws MQClientException {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(
-                "ConsumerGroupName");
-        consumer.setNamesrvAddr("192.168.36.190:9876");
-        consumer.setInstanceName("Consumber");
+                group);
+        consumer.setNamesrvAddr(namesrv);
+        consumer.setInstanceName(instance);
 
         /**
-         * 订阅指定topic下tags分别等于TagA或TagC或TagD
+         * 订阅指定topic下tags分别等于TagA或TagC或TagD 可以多个
          */
-        consumer.subscribe("TopicTest1", "TagA || TagC || TagD");
-        /**
-         * 订阅指定topic下所有消息<br>
-         * 注意：一个consumer对象可以订阅多个topic
-         */
-        consumer.subscribe("TopicTest2", "*");
+        consumer.subscribe(topic, tags);
 
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-
-            /**
-             * 默认msgs里只有一条消息，可以通过设置consumeMessageBatchMaxSize参数来批量接收消息
-             */
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(
-                    List<MessageExt> msgs, ConsumeConcurrentlyContext context) {
-                System.out.println(Thread.currentThread().getName()
-                        + " Receive New Messages: " + msgs.size());
-
-                MessageExt msg = msgs.get(0);
-                if (msg.getTopic().equals("TopicTest1")) {
-                    // 执行TopicTest1的消费逻辑
-                    if (msg.getTags() != null && msg.getTags().equals("TagA")) {
-                        // 执行TagA的消费
-                        System.out.println(new String(msg.getBody()));
-                    } else if (msg.getTags() != null
-                            && msg.getTags().equals("TagC")) {
-                        // 执行TagC的消费
-                    } else if (msg.getTags() != null
-                            && msg.getTags().equals("TagD")) {
-                        // 执行TagD的消费
-                    }
-                } else if (msg.getTopic().equals("TopicTest2")) {
-                    System.out.println(new String(msg.getBody()));
-                }
-
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-            }
-        });
-
+        consumer.registerMessageListener(messageListenerConcurrently);
         /**
          * Consumer对象在使用之前必须要调用start初始化，初始化一次即可<br>
          */
         consumer.start();
+    }
 
-        System.out.println("Consumer Started.");
+    public void shutdown() {
+        if (consumer != null) {
+            consumer.shutdown();
+        }
     }
 }

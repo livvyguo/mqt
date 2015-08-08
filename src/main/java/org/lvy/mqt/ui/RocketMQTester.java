@@ -1,6 +1,7 @@
 package org.lvy.mqt.ui;
 
 import org.lvy.mqt.action.ConfirmSendAndRecvActionListener;
+import org.lvy.mqt.action.SendMsgActionListener;
 import org.lvy.mqt.action.WindowsCloseHandler;
 import org.lvy.mqt.mq.MQReceiver;
 import org.lvy.mqt.mq.MQSender;
@@ -114,8 +115,7 @@ public class RocketMQTester extends JFrame {
         txtRecvMsgTag.setText("msg-test-tag");
         recvPanel.add(txtRecvMsgTag);
 
-//        btnBeginRecv.addActionListener();
-
+        btnBeginRecv.addActionListener(new ConfirmSendAndRecvActionListener(this));
         recvPanel.add(btnBeginRecv);
         this.add(recvPanel);
     }
@@ -261,14 +261,7 @@ public class RocketMQTester extends JFrame {
         txtMsg.setBounds(520, 20, 100, 20);
         txtMsg.setText("test-data");
         senderAddrPanel.add(txtMsg);
-
-
-        btnSendMsg.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                String text = RocketMQTester.this.txtMqSenderGroupName.getText();
-            }
-        });
+        btnSendMsg.addActionListener(new SendMsgActionListener(this));
         senderAddrPanel.add(btnSendMsg);
         this.add(senderAddrPanel);
     }
