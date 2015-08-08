@@ -7,6 +7,7 @@ import com.alibaba.rocketmq.common.message.MessageExt;
 import org.lvy.mqt.ui.RocketMQTester;
 import org.lvy.mqt.util.Utils;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -25,12 +26,15 @@ public class MsgHandler implements MessageListenerConcurrently {
         System.out.println(Thread.currentThread().getName()
                 + " Receive New Messages: " + msgs.size());
         MessageExt msg = msgs.get(0);
-        mqTester.getRecvMsgArea().append(Utils.getLineSeparator());
-        mqTester.getRecvMsgArea().append("[接收消息] [topic: "
-                + msg.getTopic()
-                + " ,tags: " + msg.getTags()
-                + " ,messages " + new String(msg.getBody())
+        JTextArea recvMsgArea = mqTester.getRecvMsgArea();
+        recvMsgArea.append(Utils.getLineSeparator());
+        recvMsgArea.append("[接收消息] [topic: "
+                        + msg.getTopic()
+                        + " ,tags: " + msg.getTags()
+                        + " ,messages " + new String(msg.getBody())
         );
+        recvMsgArea.setCaretPosition(recvMsgArea.getText().length());
+
         return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
     }
 }

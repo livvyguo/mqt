@@ -45,8 +45,10 @@ public class SendMsgActionListener implements ActionListener {
             try {
                 SendResult result = mqSender.sendMessage(message);
                 callbackMsg.append("[发送成功] " + result);
+                callbackMsg.setCaretPosition(callbackMsg.getText().length());
             } catch (Exception ee) {
                 callbackMsg.append("[发送失败] " + ee.getMessage());
+                callbackMsg.setCaretPosition(callbackMsg.getText().length());
             }
 
         } else {

@@ -1,9 +1,6 @@
 package org.lvy.mqt.ui;
 
-import sun.plugin2.message.Message;
-
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import java.awt.*;
 
 /**
@@ -26,6 +23,5 @@ public class MessageTipDialog extends JDialog {
         setResizable(false);
         setLocationRelativeTo(frame);
     }
-
 
 }
